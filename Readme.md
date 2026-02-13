@@ -12,3 +12,7 @@ struct TestStructA : public Serialization
 TestStructA a;
 std::cout << a.get_json().dump() << std::endl;
 ```
+3. Finally, got JSON output
+```
+{"1":123,"2":456.0}
+```
