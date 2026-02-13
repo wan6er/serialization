@@ -8,6 +8,12 @@
 using json = nlohmann::json;
 using namespace SERIALIZATION;
 
+struct TestStructA : public Serialization
+{
+    SUint32 a = { this, "1", 123 };
+    SFloat32 b = { this, "2", 456.0f };
+};
+
 struct TestStruct : public Serialization
 {
     SInt32 a = { this, "age"};
@@ -15,19 +21,20 @@ struct TestStruct : public Serialization
     TestStruct() = default;
     TestStruct(Serialization* cls, std::string const& name) : Serialization(cls, name) {}
 };
-struct TestStructA : public Serialization
+struct TestStructB : public Serialization
 {
     SUint32 a = { this, "1", 123 };
     TestStruct tsa = { this, "2" };
     SFloat32 b = { this, "3", 456.0f };
-    TestStructA() = default;
-    TestStructA(Serialization* cls, std::string const& name) : Serialization(cls, name) {}
-
 };
 
 
 int main()
 {
+    {
+        TestStructA a;
+        std::cout << a.get_json().dump() << std::endl;
+    }
     // auto ts = test();
     // std::cout << ts.get_json().dump() << std::endl;
     // {
@@ -45,7 +52,7 @@ int main()
     // std::cout << tes.get_json().dump() << std::endl;
 
     {
-        TestStructA test1;
+        TestStructB test1;
 
         std::vector<std::thread> thrs(10000);
         int i = 0;
